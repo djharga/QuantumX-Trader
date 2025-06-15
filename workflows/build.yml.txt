@@ -1,0 +1,20 @@
+name: Build QuantumX EXE
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install -r requirements.txt pyinstaller
+      - run: pyinstaller --noconsole --onefile main.py
+      - uses: actions/upload-artifact@v3
+        with:
+          name: QuantumX-Trader-exe
+          path: dist/main.exe
